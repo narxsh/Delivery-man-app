@@ -21,6 +21,7 @@ import 'package:stackfood_multivendor_driver/feature/html/screens/html_viewer_sc
 import 'package:stackfood_multivendor_driver/feature/language/screens/language_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/notification/screens/notification_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/order/screens/order_details_screen.dart';
+import 'package:stackfood_multivendor_driver/feature/order/screens/order_summery_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/order/screens/running_order_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/profile/screens/update_profile_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/splash/screens/splash_screen.dart';
@@ -55,6 +56,9 @@ class RouteHelper {
   static const String payment = '/payment';
   static const String transactionHistory = '/transaction-history';
 
+  //custom route added by naresh
+  static const String orderSummery = '/order-summery';
+  //closed
 
   static String getInitialRoute() => initial;
   static String getSplashRoute(NotificationBodyModel? body) {
@@ -78,6 +82,9 @@ class RouteHelper {
   static String getPrivacyRoute() => privacy;
   static String getLanguageRoute(String page) => '$language?page=$page';
   static String getUpdateRoute(bool isUpdate) => '$update?update=${isUpdate.toString()}';
+
+  static String getOrderSummeryRoute(int? id) => '$orderSummery?id=$id';
+
   static String getChatRoute({required NotificationBodyModel? notificationBody, User? user, int? conversationId}) {
 
     String notificationBody0 = 'null';
@@ -131,6 +138,14 @@ class RouteHelper {
         orderId: int.parse(Get.parameters['id']!), orderIndex: null, isRunningOrder: null,
       );
     }),
+
+    GetPage(name: orderSummery, page: () {
+      OrderSummeryScreen? orderSummery = Get.arguments;
+      return orderSummery ?? OrderSummeryScreen(
+        orderId: int.parse(Get.parameters['id']!), orderIndex: null, isRunningOrder: null,
+      );
+    }),
+
     GetPage(name: updateProfile, page: () => const UpdateProfileScreen()),
     GetPage(name: notification, page: () => NotificationScreen(fromNotification: Get.parameters['from_notification'] == 'true')),
     GetPage(name: runningOrder, page: () => const RunningOrderScreen()),

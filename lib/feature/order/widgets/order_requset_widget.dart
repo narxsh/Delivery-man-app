@@ -3,6 +3,7 @@ import 'package:stackfood_multivendor_driver/feature/auth/controllers/address_co
 import 'package:stackfood_multivendor_driver/feature/order/controllers/order_controller.dart';
 import 'package:stackfood_multivendor_driver/feature/order/screens/order_details_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/order/screens/order_location_screen.dart';
+import 'package:stackfood_multivendor_driver/feature/order/screens/order_summery_screen.dart';
 import 'package:stackfood_multivendor_driver/feature/splash/controllers/splash_controller.dart';
 import 'package:stackfood_multivendor_driver/feature/order/domain/models/order_model.dart';
 import 'package:stackfood_multivendor_driver/feature/profile/controllers/profile_controller.dart';
@@ -63,10 +64,31 @@ class OrderRequestWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                  Text(
-                    '${orderModel.detailsCount} ${orderModel.detailsCount! > 1 ? 'items'.tr : 'item'.tr}',
-                    style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                  // Text(
+                  //   '${orderModel.detailsCount} ${orderModel.detailsCount! > 1 ? 'items'.tr : 'item'.tr}',
+                  //   style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                  // ),
+
+                  // updated above code by naresh
+                  InkWell(
+                    onTap: () {
+                      //                Get.toNamed(
+                      //   RouteHelper.getOrderDetailsRoute(orderModel.id),
+                      //   arguments: OrderDetailsScreen(orderId: orderModel.id, isRunningOrder: false, orderIndex: index),
+                      // );
+                      Get.toNamed(
+                        RouteHelper.getOrderSummeryRoute(orderModel.id),
+                        arguments: OrderSummeryScreen(orderId: orderModel.id, isRunningOrder: true, orderIndex: index),
+                      );
+                    },
+                    child: Text(
+                      '${orderModel.detailsCount} ${orderModel.detailsCount! > 1 ? 'items'.tr : 'item'.tr}',
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).primaryColor),
+                    ),
                   ),
+                  //closed
+
+                  
                   const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
                   Text(
@@ -261,6 +283,29 @@ class OrderRequestWidget extends StatelessWidget {
 
             ]),
           ),
+
+          // custom click to know more added by naresh
+          InkWell(
+            onTap: () {
+              Get.toNamed(
+                RouteHelper.getOrderSummeryRoute(orderModel.id),
+                arguments: OrderSummeryScreen(orderId: orderModel.id, isRunningOrder: true, orderIndex: index),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              const Text("Click to know order details"),
+              IconButton(onPressed: () {
+                Get.toNamed(
+                  RouteHelper.getOrderSummeryRoute(orderModel.id),
+                  arguments: OrderSummeryScreen(orderId: orderModel.id, isRunningOrder: true, orderIndex: index),
+                );
+              }, icon: Icon(Icons.info)),
+            ]),
+          ),
+          // closed
+          
 
         ]);
       }),
